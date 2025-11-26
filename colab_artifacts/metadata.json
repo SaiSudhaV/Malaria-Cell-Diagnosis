@@ -1,0 +1,16 @@
+{
+  "tf_version": "2.19.0",
+  "train_split_counts": {
+    "train": 22046,
+    "val": 2754,
+    "test": 2758
+  },
+  "epochs_stage1": 8,
+  "finetune_epochs": 4,
+  "batch_size": 32,
+  "img_size": [
+    224,
+    224
+  ],
+  "notes": "Model trained in Colab GPU. Save H5 and SavedModel to Drive and download to local machine."
+}
