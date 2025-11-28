@@ -1,0 +1,33 @@
+# Dockerfile for development
+FROM python:3.10
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    git \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application
+COPY . .
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    TF_CPP_MIN_LOG_LEVEL=2
+
+# Expose ports
+EXPOSE 8000 5000 4200
+
+CMD ["/bin/bash"]

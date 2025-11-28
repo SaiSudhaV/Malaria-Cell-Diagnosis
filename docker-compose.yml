@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # FastAPI inference service
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: malaria_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models:ro
+      - ./data:/app/data:ro
+      - ./logs:/app/logs
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TF_CPP_MIN_LOG_LEVEL=2
+    restart: unless-stopped
+    networks:
+      - malaria_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # MLflow tracking server
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:latest
+    container_name: malaria_mlflow
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlruns:/mlflow/mlruns
+      - ./artifacts:/mlflow/artifacts
+    command: mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri file:/mlflow/mlruns --default-artifact-root /mlflow/artifacts
+    restart: unless-stopped
+    networks:
+      - malaria_network
+
+  # Prefect server (optional, for workflow management)
+  prefect:
+    image: prefecthq/prefect:latest
+    container_name: malaria_prefect
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./workflows:/app/workflows
+    environment:
+      - PREFECT_UI_URL=http://0.0.0.0:4200/api
+    restart: unless-stopped
+    networks:
+      - malaria_network
+    command: prefect server start --host 0.0.0.0 --port 4200
+
+networks:
+  malaria_network:
+    driver: bridge
