@@ -143,6 +143,30 @@ Setup:
   $ pip install -r requirements.txt
   $ pip install -e .
 
+Troubleshooting - Installation / Dependency Conflicts:
+  - If pip reports dependency resolution errors (common on Windows when mixing
+    packages that require different major `pydantic` versions), try the
+    following:
+    1. Upgrade pip before installing: `python -m pip install --upgrade pip`
+    2. We pin `pydantic==1.10.12` in `requirements.txt` to stay compatible with
+       `prefect==2.13.0`. If you need pydantic v2 features, you'll need to
+       upgrade `prefect` to a v2 release that supports pydantic v2 and update
+       other packages accordingly.
+    3. Remove optional extras if not needed (for DVC cloud remotes use
+       `pip install 'dvc[s3]'` or similar).
+  - Example (PowerShell):
+
+```powershell
+# Activate venv
+venv\Scripts\Activate.ps1
+
+# Upgrade pip
+python -m pip install --upgrade pip
+
+# Install dependencies
+python -m pip install -r requirements.txt
+```
+
 Start Services:
   $ mlflow server --host 0.0.0.0 --port 5000          # Terminal 1
   $ python -m uvicorn api.main:app --port 8000 --reload  # Terminal 2
