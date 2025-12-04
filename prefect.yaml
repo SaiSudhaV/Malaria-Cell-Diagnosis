@@ -1,0 +1,49 @@
+name: malaria-diagnosis-project
+prefect-version: 2.13.5
+
+build:
+- prefect_docker.deployments.steps.build_docker_image:
+    id: build-image
+    requires: prefect-docker>=0.3.0
+    image_name: malaria-diagnosis
+    tag: latest
+    dockerfile: docker/Dockerfile
+
+push:
+- prefect_docker.deployments.steps.push_docker_image:
+    requires: prefect-docker>=0.3.0
+    image_name: "{{ build-image.image }}"
+
+pull:
+- prefect.deployments.steps.set_working_directory:
+    directory: /app
+
+deployments:
+- name: data-preprocessing
+  version: 
+  tags: []
+  description: Data preprocessing pipeline
+  entrypoint: workflows/prefect_flows.py:preprocessing_flow
+  parameters: {}
+  work_pool:
+    name: default-agent-pool
+  schedule:
+    cron: "0 2 * * *"  # Daily at 2 AM
+
+- name: model-evaluation
+  version: 
+  tags: []
+  description: Model evaluation pipeline
+  entrypoint: workflows/prefect_flows.py:evaluation_flow
+  parameters: {}
+  work_pool:
+    name: default-agent-pool
+
+- name: batch-prediction
+  version: 
+  tags: []
+  description: Batch prediction pipeline
+  entrypoint: workflows/prefect_flows.py:batch_prediction_flow
+  parameters: {}
+  work_pool:
+    name: default-agent-pool
