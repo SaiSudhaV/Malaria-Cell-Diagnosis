@@ -470,7 +470,20 @@ Inference Demonstration
 - Make predictions
 - Visualize results
 - Batch predictions
-
+**Data Flow:**
+raw images → ImageDataLoader → ImagePreprocessor → train/val/test splits (DVC)
+                                                             ↓
+                                                    MalariaPredictor (VGG16)
+                                                             ↓
+                          ┌────────────────────────────────┼────────────────────────────────┐
+                          ↓                                ↓                                ↓
+                    FastAPI Endpoints              Prefect Workflows            MLflow Tracking
+                    (5 REST endpoints)        (orchestration + scheduling)    (experiments, models)
+                          ↓                                ↓                                ↓
+                    API Server (8000)          Prefect Server (4200)         MLflow Server (5000)
+                          ↓                                ↓                                ↓
+                    Docker Container                Docker Network               Monitoring
+                  (docker-compose)                 (unified deployment)      (Evidently AI)
 ---
 
 **Last Updated**: 2025-12-07
