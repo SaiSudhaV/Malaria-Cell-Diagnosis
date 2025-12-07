@@ -471,22 +471,7 @@ Inference Demonstration
 - Visualize results
 - Batch predictions
 
-## 🎓 Evaluation Criteria (100 Marks)
-
-- ✅ **Problem Definition** (5 marks)
-- ✅ **EDA** (10 marks)
-- ✅ **Data Preprocessing & DVC** (10 marks)
-- ✅ **Model & MLflow** (15 marks)
-- ✅ **Prefect Workflow** (15 marks)
-- ✅ **CI/CD** (10 marks)
-- ✅ **Docker** (10 marks)
-- ✅ **Deployment** (10 marks)
-- ✅ **Monitoring** (10 marks)
-- ✅ **Documentation** (5 marks)
-
-**Total: 100 marks**
-
 ---
 
-**Last Updated**: 2025-11-27
+**Last Updated**: 2025-12-07
 **Version**: 1.0.0
