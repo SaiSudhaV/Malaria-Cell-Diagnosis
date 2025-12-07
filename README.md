@@ -470,23 +470,15 @@ Inference Demonstration
 - Make predictions
 - Visualize results
 - Batch predictions
+**Data Flow:**
+<img width="983" height="382" alt="image" src="https://github.com/user-attachments/assets/d08462a8-b9c2-4a2b-a8a8-dfc38044519e" />
 
-## 🎓 Evaluation Criteria (100 Marks)
+Results:
+<img width="1920" height="1020" alt="mlflow2" src="https://github.com/user-attachments/assets/69cd5564-cba7-4e58-9ea0-7148053d9399" />
 
-- ✅ **Problem Definition** (5 marks)
-- ✅ **EDA** (10 marks)
-- ✅ **Data Preprocessing & DVC** (10 marks)
-- ✅ **Model & MLflow** (15 marks)
-- ✅ **Prefect Workflow** (15 marks)
-- ✅ **CI/CD** (10 marks)
-- ✅ **Docker** (10 marks)
-- ✅ **Deployment** (10 marks)
-- ✅ **Monitoring** (10 marks)
-- ✅ **Documentation** (5 marks)
-
-**Total: 100 marks**
+<img width="1920" height="1026" alt="uniflow" src="https://github.com/user-attachments/assets/728a65c6-888e-4640-8a4a-cfe9db020b85" />
 
 ---
 
-**Last Updated**: 2025-11-27
+**Last Updated**: 2025-12-07
 **Version**: 1.0.0
